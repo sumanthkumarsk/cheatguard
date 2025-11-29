@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
 
 LOG_PATH = os.environ.get("LOG_PATH", "logs/events.log")
-MODEL_PATH = os.environ.get("MODEL_PATH", "models/yolov8x.pt")
+MODEL_PATH = os.environ.get("MODEL_PATH", "models/best.pt")
 # Comma-separated class names to flag (e.g. "cell phone,person")
 FLAG_CLASSES = [s.strip().lower() for s in os.environ.get("FLAG_CLASSES", "cell phone").split(",") if s.strip()]
 
