@@ -1,28 +1,22 @@
 FROM python:3.10-slim
 
-# Prevent Python writing .pyc
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    ffmpeg \
-    libsm6 \
-    libxext6 \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
-COPY requirements.txt .
+# system deps required by opencv and ultralytics
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libgl1 \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only PyTorch automatically
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY . /app
 
-# Expose FastAPI port
-EXPOSE 3000
+EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

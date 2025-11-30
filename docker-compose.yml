@@ -9,7 +9,7 @@ services:
       - ./backend/logs:/app/logs
       - ./backend/models:/app/models   # mount your yolov8x.pt here
     environment:
-      - MODEL_PATH=/app/models/yolov8x.pt
+      - MODEL_PATH=/app/models/best.pt
       - FLAG_CLASSES=cell phone,person
       - LOG_PATH=/app/logs/events.log
 
